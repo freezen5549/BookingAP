@@ -5,9 +5,8 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[uspUserExist]
 (
-	@UserPassword    nvarchar(200),
 	@UserAccount     nvarchar(200),
-	@ErrorMessage    nvarchar(MAX)
+	@UserPassword    nvarchar(200)
 )
 AS
 BEGIN
@@ -17,13 +16,13 @@ BEGIN
 
     -- Insert statements for procedure here
 	BEGIN TRY  
-		SELECT count(UserID)
+		SELECT count(UserID) as UserCount
 		  FROM [dbo].tbUserInfo
 		 WHERE UserAccount = @UserAccount
 		   and UserPassword = @UserPassword
 	END TRY 
 	BEGIN CATCH  
-		 SET @ErrorMessage = ERROR_MESSAGE();
+		
 	END CATCH 
 	
 	SET NOCOUNT OFF;
