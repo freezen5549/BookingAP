@@ -15,7 +15,7 @@ namespace BookingAP.Controllers
             _userInfoService = userInfoService;
         }
 
-        [HttpGet("UserExist")]
+        [HttpPost("UserExist")]
         public async Task<IActionResult> UserExist(UserExistRequest userExistRequest)
         {
             return Ok(await _userInfoService.CheckUserExist(userExistRequest));

@@ -17,14 +17,11 @@ namespace BookingAP.Models.UserInfo
         public async Task<bool> CheckUserExist(UserExistRequest userExistRequest)
         {
             var userExistResponse = _dbContext.uspUserExist(userExistRequest);
-            if (userExistResponse.Count() > 0)
+            if (userExistResponse.ToList()[0].UserCount > 0)
             {
                 return true;
             }
-            else 
-            { 
-                return false; 
-            }
+            return false; 
         }
     }
 }

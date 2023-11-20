@@ -11,7 +11,11 @@ namespace BookingAP.Models.DBM
             private readonly string _connectionString;
             public ApplicationDbContext(IConfiguration configuration)
             {
-                _connectionString = configuration.GetConnectionString("Web_InterViewTestContext");
+                _connectionString = configuration.GetConnectionString("APContext");
+            }
+            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+            {
+                app.UseCors("AllowAllOrigins");
             }
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
@@ -24,20 +28,20 @@ namespace BookingAP.Models.DBM
                 }
             }
 
-            class SpPara
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
-                public string Name { get; set; } = string.Empty;
-                public object Value { get; set; } = string.Empty;
+                modelBuilder.Entity<UserExistResponse>().HasNoKey();
             }
 
-            public virtual IEnumerable<UserExistResponse> uspUserExist(UserExistRequest userExist)
+            public IEnumerable<UserExistResponse> uspUserExist(UserExistRequest userExist)
             {
+                const string sql = "EXEC uspUserExist @Para1, @Para2";
+
                 SqlParameter[] parameters = new SqlParameter[2];
+                parameters[0] = new SqlParameter("@Para1", userExist.UserAccount);
+                parameters[1] = new SqlParameter("@Para2", userExist.UserPassword); 
 
-                parameters[0] = new SqlParameter($"@Para1", userExist.UserAccount);
-                parameters[1] = new SqlParameter($"@Para2", userExist.UserPassword);
-
-                return Set<UserExistResponse>().FromSqlRaw($"EXEC uspUserExist", parameters).ToList();
+               return Set<UserExistResponse>().FromSqlRaw(sql, parameters).ToList();
             }
 
         }

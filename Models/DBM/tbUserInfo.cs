@@ -1,4 +1,6 @@
-﻿namespace BookingAP.Models.DBM
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookingAP.Models.DBM
 {
     public class UserInfo : Common
     {
