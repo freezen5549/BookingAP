@@ -1,5 +1,6 @@
 ﻿using BookingAP.Models.DBM;
 using BookingAP.Models.UserInfo;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingAP.Controllers
@@ -19,6 +20,12 @@ namespace BookingAP.Controllers
         public async Task<IActionResult> UserExist(UserExistRequest userExistRequest)
         {
             return Ok(await _userInfoService.CheckUserExist(userExistRequest));
+        }
+
+        [HttpPost("UserInsert")]
+        public async Task<IActionResult> UserInsert(UserInsertRequest userInsertRequest)
+        {
+            return Ok(await _userInfoService.UserInsert(userInsertRequest));
         }
 
     }

@@ -21,7 +21,23 @@ namespace BookingAP.Models.UserInfo
             {
                 return true;
             }
-            return false; 
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UserInsert(UserInsertRequest userInsert)
+        {
+            var userInsertResponse = _dbContext.uspUserInsert(userInsert);
+            if (userInsertResponse.ToList()[0].UserCount > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
