@@ -3,14 +3,12 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE uspUserInsert
+CREATE PROCEDURE [dbo].[uspUserInsert]
 (
-	@UserID          nvarchar(10),
 	@UserName        nvarchar(50),
 	@UserType        nvarchar(5),
-	@UserPassword    nvarchar(200),
 	@UserAccount     nvarchar(200),
-	@ErrorMessage    nvarchar(MAX)
+	@UserPassword    nvarchar(200)
 )
 AS
 BEGIN
@@ -21,15 +19,18 @@ BEGIN
     -- Insert statements for procedure here
 	BEGIN TRY  
 		INSERT Booking.dbo.tbUserInfo 
-		VALUES (@UserID,
+		VALUES (
 				@UserName,
 				@UserType,
 				@UserPassword,
 				@UserAccount
 				)
+
+		SELECT COUNT(UserAccount) as UserCount
+		  FROM Booking.dbo.tbUserInfo
+		 WHERE UserAccount = @UserAccount
 	END TRY 
 	BEGIN CATCH  
-		 SET @ErrorMessage = ERROR_MESSAGE();
 	END CATCH 
 	
 	SET NOCOUNT OFF;

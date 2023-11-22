@@ -16,7 +16,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	BEGIN TRY  
-		SELECT count(UserID) as UserCount
+		SELECT count(UserAccount) as UserCount
 		  FROM [dbo].tbUserInfo
 		 WHERE UserAccount = @UserAccount
 		   and UserPassword = @UserPassword
